@@ -1,3 +1,12 @@
+package fr.dauphine.miageif.MSA.Personne;
+
+import fr.dauphine.miageif.MSA.Personne.Personne;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PersonneService {
  
@@ -32,7 +41,7 @@ public class PersonneService {
         if (personneOptional.isPresent()) {
             Personne updatedPersonne = personneOptional.get();
             updatedPersonne.setNom(personne.getNom());
-            updatedPersonne.setPrenom(personne.getPrenom());
+            updatedPersonne.setNom(personne.getPrenom());
             updatedPersonne.setEmail(personne.getEmail());
             updatedPersonne.setLivreEmprunte(personne.getLivreEmprunte());
             Livre livreEmprunte = updatedPersonne.getLivreEmprunte();
