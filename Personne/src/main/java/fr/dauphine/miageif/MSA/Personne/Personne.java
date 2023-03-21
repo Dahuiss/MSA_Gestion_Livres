@@ -1,9 +1,10 @@
 package fr.dauphine.miageif.MSA.Personne;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "personne")
 public class Personne {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +18,17 @@ public class Personne {
  
     @Column(name = "email")
     private String email;
- 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "livre_id", referencedColumnName = "id")
-    private Livre livreEmprunte;
+
+     @Column(name = "adresse")
+    private String adresse;
+
+     @Column(name = "genre")
+    private String genre;
+
+     @Column(name = "date_naissance")
+    private Date date_naissance;
+
+    // Date de naissance, Adresse et genre
 
     public Long getId() {
         return this.id;
