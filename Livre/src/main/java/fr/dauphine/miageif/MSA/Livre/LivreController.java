@@ -50,7 +50,7 @@ public class LivreController {
             livreRepository.save(newLivre);
             return newLivre;
 
-        }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Change rate already existed!");
+        }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Books already existed!");
 
     }
 
