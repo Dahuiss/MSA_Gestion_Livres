@@ -4,42 +4,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/personnes")
 public class PersonneController {
     @Autowired
-    private PersonneService personneService;
+    private PersonneRepository personneRepository;
 
-    @GetMapping("/")
+    @GetMapping("/personnes")
     public ResponseEntity<List<Personne>> getAllPersonnes() {
-        List<Personne> personnes = personneService.getAllPersonnes();
+        List<Personne> personnes = personneRepository.findAll();
         return new ResponseEntity<>(personnes, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Personne> getPersonneById(@PathVariable Long id) {
-        Personne personne = personneService.getPersonneById(id);
-        return new ResponseEntity<>(personne, HttpStatus.OK);
+    @GetMapping("/personnes/id={id}")
+    public Personne getPersonneById(@PathVariable Long id) {
+        Optional<Personne> personne = personneRepository.findById(id);
+        if ( personne.isPresent()){
+            return personne.get();
+        }
+        return null;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Personne> createPersonne(@RequestBody Personne personne) {
-        Personne newPersonne = personneService.createPersonne(personne);
-        return new ResponseEntity<>(newPersonne, HttpStatus.CREATED);
+    @PostMapping("/personnes/id/{id}/nom/{nom}/prenom/{prenom}/adresse/{adresse}/date_naissance/{date_naissance}/genre/{genre}")
+    public Personne createPersonne(@PathVariable Long id,
+                                   @PathVariable String nom,
+                                   @PathVariable String prenom,
+                                   @PathVariable String adresse,
+                                   @PathVariable String genre,
+                                   @PathVariable Date date_naissance
+                                                   ) {
+        Optional<Personne> personne = personneRepository.findById(id);
+        if(personne == null){
+            Personne newPers = new Personne(id,nom,prenom,adresse,genre,date_naissance);
+            personneRepository.save(newPers);
+            return newPers;
+        } else throw new ResponseStatusException(HttpStatus.CONFLICT,"Cette personne existe déjà :)");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Personne> updatePersonne(@PathVariable Long id, @RequestBody Personne personne) {
-        Personne updatedPersonne = personneService.updatePersonne(id, personne);
-        return new ResponseEntity<>(updatedPersonne, HttpStatus.OK);
+    @PutMapping("/personnes/id/{id}")
+    public ResponseEntity<Personne> updatePersonne(@PathVariable Long id) {
+        Optional<Personne> updatedPersonne = personneRepository.findById(id);
+        updatedPersonne.get().setId(id);
+        personneRepository.save(updatedPersonne.orElse(null));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/personnes/id/{id}")
     public ResponseEntity<Void> deletePersonne(@PathVariable Long id) {
-        personneService.deletePersonne(id);
+        Optional<Personne> personne = personneRepository.findById(id);
+        personneRepository.delete(personne.orElse(null));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
