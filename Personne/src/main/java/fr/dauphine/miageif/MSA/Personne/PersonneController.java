@@ -6,9 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.time.DateUtils;
 
 @RestController
 public class PersonneController {
@@ -30,20 +33,23 @@ public class PersonneController {
         return null;
     }
 
-    @PostMapping("/personnes/id/{id}/nom/{nom}/prenom/{prenom}/adresse/{adresse}/date_naissance/{date_naissance}/genre/{genre}")
-    public Personne createPersonne(@PathVariable Long id,
+    @PostMapping("/personnes/nom/{nom}/prenom/{prenom}/adresse/{adresse}/date_naissance/{date_naissance}/genre/{genre}")
+    public Personne createPersonne(
                                    @PathVariable String nom,
                                    @PathVariable String prenom,
                                    @PathVariable String adresse,
                                    @PathVariable String genre,
-                                   @PathVariable Date date_naissance
-                                                   ) {
-        Optional<Personne> personne = personneRepository.findById(id);
-        if(personne == null){
-            Personne newPers = new Personne(id,nom,prenom,adresse,genre,date_naissance);
+                                   @PathVariable("date_naissance") String date_naissance
+                                                   ) throws ParseException {
+            Date dateT = null;
+            Date dateTplus = null;
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            dateT = f.parse(date_naissance);
+            dateTplus = DateUtils.addDays(dateT,+1);
+
+            Personne newPers = new Personne(nom,prenom,adresse,genre,dateTplus);
             personneRepository.save(newPers);
             return newPers;
-        } else throw new ResponseStatusException(HttpStatus.CONFLICT,"Cette personne existe déjà :)");
     }
 
     @PutMapping("/personnes/id/{id}")

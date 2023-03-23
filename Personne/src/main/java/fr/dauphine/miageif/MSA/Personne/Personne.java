@@ -1,13 +1,14 @@
 package fr.dauphine.miageif.MSA.Personne;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Personne {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
 
@@ -17,17 +18,17 @@ public class Personne {
 
     private String genre;
 
-    @Column(name = "date_naissance")
+    @Column(name = "date_naissance", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date date_naissance;
-
 
     public Personne() {
 
     }
 
-    public Personne(Long id, String nom, String prenom, String adresse, String genre, Date date_naissance) {
+    public Personne(String nom, String prenom, String adresse, String genre, Date date_naissance) {
         super();
-        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
