@@ -3,7 +3,6 @@ package fr.dauphine.miageif.MSA.Livre;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "livre")
 public class Livre {
 
     @Id

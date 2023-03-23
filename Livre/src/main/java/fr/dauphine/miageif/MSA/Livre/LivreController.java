@@ -44,13 +44,13 @@ public class LivreController {
              @PathVariable String editeur,
              @PathVariable String edition){
 
-        Optional<Livre> tc = livreRepository.findByIsbn(isbn);
-        if(tc == null){
+//        Optional<Livre> tc = livreRepository.findByIsbn(isbn);
+//        if(tc == null){
             Livre newLivre = new Livre(isbn,auteur,editeur,edition);
             livreRepository.save(newLivre);
             return newLivre;
-
-        }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Books already existed!");
+//
+//        }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Books already existed!");
 
     }
 
