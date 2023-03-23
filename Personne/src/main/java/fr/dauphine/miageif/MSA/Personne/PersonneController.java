@@ -1,40 +1,45 @@
 package fr.dauphine.miageif.MSA.Personne;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/personne")
+@RequestMapping("/personnes")
 public class PersonneController {
- 
     @Autowired
     private PersonneService personneService;
- 
-    @GetMapping("")
-    public List<Personne> findAll() {
-        return personneService.findAll();
+
+    @GetMapping("/")
+    public ResponseEntity<List<Personne>> getAllPersonnes() {
+        List<Personne> personnes = personneService.getAllPersonnes();
+        return new ResponseEntity<>(personnes, HttpStatus.OK);
     }
- 
+
     @GetMapping("/{id}")
-    public Personne findById(@PathVariable Long id) {
-        return personneService.findById(id);
+    public ResponseEntity<Personne> getPersonneById(@PathVariable Long id) {
+        Personne personne = personneService.getPersonneById(id);
+        return new ResponseEntity<>(personne, HttpStatus.OK);
     }
- 
-    @PostMapping("")
-    public Personne save(@RequestBody Personne personne) {
-        return personneService.save(personne);
+
+    @PostMapping("/")
+    public ResponseEntity<Personne> createPersonne(@RequestBody Personne personne) {
+        Personne newPersonne = personneService.createPersonne(personne);
+        return new ResponseEntity<>(newPersonne, HttpStatus.CREATED);
     }
- 
-    @PutMapping("")
-    public Personne update(@RequestBody Personne personne) {
-        return personneService.update(personne);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Personne> updatePersonne(@PathVariable Long id, @RequestBody Personne personne) {
+        Personne updatedPersonne = personneService.updatePersonne(id, personne);
+        return new ResponseEntity<>(updatedPersonne, HttpStatus.OK);
     }
- 
+
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        personneService.deleteById(id);
+    public ResponseEntity<Void> deletePersonne(@PathVariable Long id) {
+        personneService.deletePersonne(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
- 
 }

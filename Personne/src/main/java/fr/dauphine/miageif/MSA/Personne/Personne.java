@@ -1,41 +1,50 @@
 package fr.dauphine.miageif.MSA.Personne;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-@Table(name = "personne")
 public class Personne {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
- 
-    @Column(name = "nom")
     private String nom;
- 
-    @Column(name = "prenom")
-    private String prenom;
- 
-    @Column(name = "email")
-    private String email;
 
-     @Column(name = "adresse")
+    private String prenom;
+
     private String adresse;
 
-     @Column(name = "genre")
     private String genre;
 
-     @Column(name = "date_naissance")
+    @Column(name = "date_naissance")
     private Date date_naissance;
 
-    // Date de naissance, Adresse et genre
+
+    public Personne() {
+
+    }
+
+    public Personne(Long id, String nom, String prenom, String adresse, String genre, Date date_naissance) {
+        super();
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.genre = genre;
+        this.date_naissance = date_naissance;
+    }
 
     public Long getId() {
-        return this.id;
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNom() {
-        return this.nom;
+        return nom;
     }
 
     public void setNom(String nom) {
@@ -43,17 +52,34 @@ public class Personne {
     }
 
     public String getPrenom() {
-        return this.prenom;
+        return prenom;
     }
 
-    public String getEmail() {
-        return this.email;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getAdresse() {
+        return adresse;
     }
 
-    //constructeurs, getters et setters
- 
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public Date getDate_naissance() {
+        return date_naissance;
+    }
+
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
+    }
 }
