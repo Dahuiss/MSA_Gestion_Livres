@@ -21,7 +21,6 @@ public class Livre {
     @Column(name="edition")
     private String edition;
 
-
     public Livre(String isbn, String auteur, String editeur, String edition) {
         this.isbn = isbn;
         this.auteur = auteur;
