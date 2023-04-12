@@ -72,7 +72,6 @@ public class PersonneController {
     @DeleteMapping("/personnes/id/{id}")
     public ResponseEntity<Void> deletePersonne(@PathVariable Long id) {
         Optional<Personne> personne = personneRepository.findById(id);
-        assert personne.orElse(null) != null;
         personneRepository.delete(personne.orElse(null));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
