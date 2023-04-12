@@ -1,5 +1,6 @@
-package fr.dauphine.miageif.MSA.Library;
+package fr.dauphine.miageif.MSA.Library.repository;
 
+import fr.dauphine.miageif.MSA.Library.entity.Library;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
