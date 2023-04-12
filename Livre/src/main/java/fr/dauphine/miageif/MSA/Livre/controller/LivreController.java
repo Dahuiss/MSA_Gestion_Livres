@@ -10,9 +10,11 @@ import io.swagger.annotations.ApiResponses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +51,18 @@ public class LivreController {
         return null;
     }
 
-    @PostMapping("/books/add/isbn/{isbn}/auteur/{auteur}/editeur/{editeur}/edition/{edition}")
+    @GetMapping("/books/titre={titre}")
+    @ApiOperation(value = "Find books by title", notes = "Retrieve a list of books by searching their titles.")
+    public ResponseEntity<List<Livre>> findByTitre(@PathVariable @ApiParam(value = "Book title", required = true) String titre) {
+        List<Livre> livres = livreRepository.findByTitreContainingIgnoreCase(titre);
+        if (livres.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+        return ResponseEntity.ok(livres);
+    }
+
+
+    @PostMapping("/books/add/isbn/{isbn}/auteur/{auteur}/titre/{titre}/editeur/{editeur}/edition/{edition}")
     @ApiOperation(value = "Add a new book", notes = "Create a new book with the provided information.")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Book created successfully"),
@@ -59,6 +72,7 @@ public class LivreController {
     public Livre addLivre(
             @PathVariable @ApiParam(value = "ISBN of the book", required = true) String isbn,
             @PathVariable @ApiParam(value = "Author of the book", required = true) String auteur,
+            @PathVariable @ApiParam(value = "Titre of the book", required = true) String titre,
             @PathVariable @ApiParam(value = "Publisher of the book", required = true) String editeur,
             @PathVariable @ApiParam(value = "Edition of the book", required = true) String edition) {
 
@@ -67,7 +81,7 @@ public class LivreController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Book with the given ISBN already exists!");
         }
 
-        Livre newLivre = new Livre(isbn, auteur, editeur, edition);
+        Livre newLivre = new Livre(isbn, auteur, titre, editeur, edition);
         livreRepository.save(newLivre);
         return newLivre;
     }

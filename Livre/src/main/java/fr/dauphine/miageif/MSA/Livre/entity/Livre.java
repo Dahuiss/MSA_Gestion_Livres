@@ -15,15 +15,19 @@ public class Livre {
     @Column(name="auteur")
     private String auteur;
 
+    @Column(name="titre")
+    private String titre;
+
     @Column(name="editeur")
     private String editeur;
 
     @Column(name="edition")
     private String edition;
 
-    public Livre(String isbn, String auteur, String editeur, String edition){
+    public Livre(String isbn, String auteur, String titre, String editeur, String edition){
         this.isbn = isbn;
         this.auteur = auteur;
+        this.titre = titre;
         this.editeur = editeur;
         this.edition = edition;
     }
@@ -70,5 +74,13 @@ public class Livre {
 
     public void setEdition(String edition) {
         this.edition = edition;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 }
