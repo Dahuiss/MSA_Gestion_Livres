@@ -1,4 +1,4 @@
-package fr.dauphine.miageif.MSA.Livre;
+package fr.dauphine.miageif.MSA.Livre.entity;
 
 import javax.persistence.*;
 
@@ -21,7 +21,7 @@ public class Livre {
     @Column(name="edition")
     private String edition;
 
-    public Livre(String isbn, String auteur, String editeur, String edition) {
+    public Livre(String isbn, String auteur, String editeur, String edition){
         this.isbn = isbn;
         this.auteur = auteur;
         this.editeur = editeur;
