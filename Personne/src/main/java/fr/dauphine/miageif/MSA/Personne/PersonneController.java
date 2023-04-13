@@ -28,7 +28,7 @@ public class PersonneController {
     }
 
 
-    @GetMapping("/personnes/id={id}")
+    @GetMapping("/personnes/id/{id}")
     public Personne getPersonneById(@PathVariable Long id) {
         Optional<Personne> personne = personneRepository.findById(id);
         if (personne.isPresent()) {

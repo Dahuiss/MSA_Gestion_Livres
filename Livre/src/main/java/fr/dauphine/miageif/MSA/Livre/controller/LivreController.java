@@ -31,7 +31,7 @@ public class LivreController {
         return livreRepository.findAll();
     }
 
-    @GetMapping("/books/id={livreId}")
+    @GetMapping("/books/id/{livreId}")
     @ApiOperation(value = "Find book by ID", notes = "Retrieve a book by its ID.")
     public Livre findById(@PathVariable @ApiParam(value = "Book ID", required = true)  long livreId) {
         Optional<Livre> livre = livreRepository.findById(livreId);
@@ -41,7 +41,7 @@ public class LivreController {
         return null;
     }
 
-    @GetMapping("/books/isbn={isbn}")
+    @GetMapping("/books/isbn/{isbn}")
     @ApiOperation(value = "Find book by ISBN", notes = "Retrieve a book by its ISBN.")
     public Livre findByIsbn(@PathVariable @ApiParam(value = "Book ISBN", required = true) String isbn) {
         Optional<Livre> livre = livreRepository.findByIsbn(isbn);
@@ -51,7 +51,7 @@ public class LivreController {
         return null;
     }
 
-    @GetMapping("/books/titre={titre}")
+    @GetMapping("/books/titre/{titre}")
     @ApiOperation(value = "Find books by title", notes = "Retrieve a list of books by searching their titles.")
     public ResponseEntity<List<Livre>> findByTitre(@PathVariable @ApiParam(value = "Book title", required = true) String titre) {
         List<Livre> livres = livreRepository.findByTitreContainingIgnoreCase(titre);
