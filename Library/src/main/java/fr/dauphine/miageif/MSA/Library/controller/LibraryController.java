@@ -21,4 +21,9 @@ public class LibraryController {
             @PathVariable String lecteur) {
         return libraryService.createLibraryEntry(livreIsbn, lecteur);
     }
+    @Autowired
+    public LibraryController(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
+
 }
