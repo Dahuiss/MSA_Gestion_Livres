@@ -1,0 +1,41 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /
+
+http:
+  cors:
+    allow:
+      methods: GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH
+      origin: http://localhost:4200
+      max:
+        age: 3600
+
+spring:
+  mvc:
+    path:
+      match:
+        matching-strategy: ant_path_matcher
+  application:
+    name: Gestion de lecteurs
+    main:
+      allow-bean-definition-overriding: true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          default_schema: public
+          format_sql: true
+          jdbc:
+            time_zone: UTC
+            lob:
+              non_contextual_creation: true
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dumbo.db.elephantsql.com/mgcmkyum
+    username: mgcmkyum
+    password: 9J1o8vbHIz03M2BnCdn1Mq4a9wYvFdG1
