@@ -10,12 +10,14 @@ public class Personne {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="nom")
     private String nom;
 
+    @Column(name = "prenom")
     private String prenom;
-
+    @Column(name = "adresse")
     private String adresse;
-
+    @Column(name = "genre")
     private String genre;
 
     @Column(name = "date_naissance", nullable = false)
